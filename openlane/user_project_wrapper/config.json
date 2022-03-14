@@ -31,7 +31,7 @@
     "FP_PDN_HPITCH"                   : "180",
     "FP_PDN_HSPACING"                 : "15.5",
     "FP_PDN_HWIDTH"                   : "3.1",
-    "FP_PDN_MACRO_HOOKS"              : "mprj vccd1 vssd1",
+    "FP_PDN_MACRO_HOOKS"              : "user_proj_example_1 vccd1 vssd1",
     "FP_PDN_VOFFSET"                  : "5",
     "FP_PDN_VPITCH"                   : "180",
     "FP_PDN_VSPACING"                 : "15.5",

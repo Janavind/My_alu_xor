@@ -1,123 +1,179 @@
-// SPDX-FileCopyrightText: 2020 Efabless Corporation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// SPDX-License-Identifier: Apache-2.0
-
 `default_nettype none
-/*
- *-------------------------------------------------------------
- *
- * user_project_wrapper
- *
- * This wrapper enumerates all of the pins available to the
- * user for the user project.
- *
- * An example user project is provided in this wrapper.  The
- * example should be removed and replaced with the actual
- * user project.
- *
- *-------------------------------------------------------------
- */
 
-module user_project_wrapper #(
-    parameter BITS = 32
-) (
+module user_project_wrapper  (
+	`ifdef USE_POWER_PINS
+		//inout vdda1,	// User area 1 3.3V supply
+		//	inout vdda2,	// User area 2 3.3V supply
+		//	inout vssa1,	// User area 1 analog ground
+		//	inout vssa2,	// User area 2 analog ground
+			inout vccd1,	// User area 1 1.8V supply
+		//	inout vccd2,	// User area 2 1.8v supply
+			inout vssd1,	// User area 1 digital ground
+		//	inout vssd2,	// User area 2 digital ground
+	`endif
+		// Wishbone Slave ports (WB MI A)
+		 input wb_clk_i,
+		 input wb_rst_i,
+		 input wbs_stb_i,
+		 input wbs_cyc_i,
+		 input wbs_we_i,
+		 input [3:0] wbs_sel_i,
+		 input [31:0] wbs_dat_i,
+		 input [31:0] wbs_adr_i,
+		 output wbs_ack_o,
+		 output [31:0] wbs_dat_o,
+		
+		// // Logic Analyzer Signals
+		 input  [127:0] la_data_in,
+		 output [127:0] la_data_out,
+		 input  [127:0] la_oenb,
+		
+		// // IOs
+		 input  [`MPRJ_IO_PADS-1:0] io_in,
+		 output [`MPRJ_IO_PADS-1:0] io_out,
+		 output [`MPRJ_IO_PADS-1:0] io_oeb,
+		
+		// // Analog (direct connection to GPIO pad---use with
+		// caution)
+		// // Note that analog I/O is not available on the
+		// 7 lowest-numbered
+		// // GPIO pads, and so the analog_io indexing is offset from
+		// the
+		// // GPIO indexing by 7 (also upper 2 GPIOs do not have
+		// analog_io).
+		 inout [`MPRJ_IO_PADS-10:0] analog_io,
+		
+		// // Independent clock (on independent integer divider)
+		// input   user_clock2,
+		
+		// // User maskable interrupt signals
+		 output [2:0] user_irq
+		 );
+		//
+		// /*--------------------------------------*/
+		// /* User project is instantiated  here   */
+		// /*--------------------------------------*/
+
+ wire clk;
+
+ wire [`MPRJ_IO_PADS-1:0] io_in;
+ wire [`MPRJ_IO_PADS-1:0] io_out;
+ wire [7:0] A0,B0,A1,B1;  // ALU 8-bit Inputs                 
+ wire [1:0] ALU_Sel1,ALU_Sel2;// ALU Selection
+ wire [7:0] ALU_Out1,ALU_Out2; // ALU 8-bit Output
+ wire CarryOut1,CarryOut2; // Carry Out Flag
+ wire [7:0] x;
+ wire y;
+ wire wb_clk_i;
+
+ assign wb_clk_i = clk;
+ assign A0 = io_in[7:0];
+ assign B0 = io_in[15:8];
+ assign A1 = io_in[23:16];
+ assign B1 = io_in[31:24]; 
+ assign ALU_Sel1 = io_in[33:32];
+ assign ALU_Sel2 = io_in[35:34];
+ assign io_out[7:0] = ALU_Out1; 
+ assign io_out[15:8] = ALU_Out2;
+ assign io_out[16] = CarryOut1;
+ assign io_out[17] = CarryOut2;
+ assign io_out[25:18] = x;
+ assign io_out[26] = y; 
+
+ user_proj_example user_proj_example_1(
 `ifdef USE_POWER_PINS
-    inout vdda1,	// User area 1 3.3V supply
-    inout vdda2,	// User area 2 3.3V supply
-    inout vssa1,	// User area 1 analog ground
-    inout vssa2,	// User area 2 analog ground
-    inout vccd1,	// User area 1 1.8V supply
-    inout vccd2,	// User area 2 1.8v supply
-    inout vssd1,	// User area 1 digital ground
-    inout vssd2,	// User area 2 digital ground
+ .vccd1(vccd1),
+ .vssd1(vssd1),
 `endif
+ .clk(wb_clk_i),
+ .A0(io_in[7:0]),
+ .B0(io_in[15:8]),
+ .A1(io_in[23:16]),
+ .B1(io_in[31:24]),
+ .ALU_Sel1(io_in[33:32]),
+ .ALU_Sel2(io_in[35:34]),
+ .ALU_Out1(io_out[7:0]),
+ .ALU_Out2(io_out[15:8]),
+ .CarryOut1(io_out[16]),
+ .CarryOut2(io_out[17]),
+ .x(io_out[25:18]),
+ .y(io_out[26])
+ );
+ 
 
-    // Wishbone Slave ports (WB MI A)
-    input wb_clk_i,
-    input wb_rst_i,
-    input wbs_stb_i,
-    input wbs_cyc_i,
-    input wbs_we_i,
-    input [3:0] wbs_sel_i,
-    input [31:0] wbs_dat_i,
-    input [31:0] wbs_adr_i,
-    output wbs_ack_o,
-    output [31:0] wbs_dat_o,
+ endmodule	// user_project_wrapper
 
-    // Logic Analyzer Signals
-    input  [127:0] la_data_in,
-    output [127:0] la_data_out,
-    input  [127:0] la_oenb,
+ module user_proj_example(
+	 `ifdef USE_POWER_PINS
+		 inout vccd1,    // User area 1 1.8V supply
+		 inout vssd1,    // User area 1 digital ground
+	`endif
+	 input clk,
+	 input [7:0] A0,B0,A1,B1,  // ALU 8-bit Inputs
+	 input [1:0] ALU_Sel1,ALU_Sel2,// ALU Selection
+	 output [7:0] ALU_Out1,ALU_Out2, // ALU 8-bit Output
+		 output CarryOut1,CarryOut2, // Carry Out Flag
+		 output [7:0] x,
+		 output y
+	 );
 
-    // IOs
-    input  [`MPRJ_IO_PADS-1:0] io_in,
-    output [`MPRJ_IO_PADS-1:0] io_out,
-    output [`MPRJ_IO_PADS-1:0] io_oeb,
+	 my_alu alu_1(
+		 .A (A0),
+		 .B (B0),
+		 .ALU_Sel (ALU_Sel1),
+		 .ALU_Out (ALU_Out1),
+		 .CarryOut (CarryOut1)
+	 );
 
-    // Analog (direct connection to GPIO pad---use with caution)
-    // Note that analog I/O is not available on the 7 lowest-numbered
-    // GPIO pads, and so the analog_io indexing is offset from the
-    // GPIO indexing by 7 (also upper 2 GPIOs do not have analog_io).
-    inout [`MPRJ_IO_PADS-10:0] analog_io,
+	 my_alu alu_2(
+		 .A (A1),
+		 .B (B1),
+		 .ALU_Sel (ALU_Sel2),
+		 .ALU_Out (ALU_Out2),
+		 .CarryOut (CarryOut2)
+	 );
 
-    // Independent clock (on independent integer divider)
-    input   user_clock2,
 
-    // User maskable interrupt signals
-    output [2:0] user_irq
-);
+	 assign x[7:0] = ALU_Out1[7:0] ^ ALU_Out2[7:0];
+	 assign y = CarryOut1 ^ CarryOut2;
+	 always @(*)
+	 begin
+		 if (x!=0)
+			 $display ("Fault detected");
+		 else
+			 $display ("sucess");
+	 end
 
-/*--------------------------------------*/
-/* User project is instantiated  here   */
-/*--------------------------------------*/
 
-user_proj_example mprj (
-`ifdef USE_POWER_PINS
-	.vccd1(vccd1),	// User area 1 1.8V power
-	.vssd1(vssd1),	// User area 1 digital ground
-`endif
+	 endmodule
 
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
+	 module my_alu(
+		 input [7:0] A,B,  // ALU 8-bit Inputs                 
+		 input [1:0] ALU_Sel,// ALU Selection
+		 output [7:0] ALU_Out, // ALU 8-bit Output
+			 output CarryOut // Carry Out Flag
+		 );
+		 reg [8:0] ALU_Result;
 
-    // MGMT SoC Wishbone Slave
+		 assign ALU_Out = ALU_Result[7:0]; // ALU out
+		 assign CarryOut = ALU_Result[8]; 
 
-    .wbs_cyc_i(wbs_cyc_i),
-    .wbs_stb_i(wbs_stb_i),
-    .wbs_we_i(wbs_we_i),
-    .wbs_sel_i(wbs_sel_i),
-    .wbs_adr_i(wbs_adr_i),
-    .wbs_dat_i(wbs_dat_i),
-    .wbs_ack_o(wbs_ack_o),
-    .wbs_dat_o(wbs_dat_o),
+		 always @(*)
+		 begin
+			 case(ALU_Sel)
+				 2'b00: // Addition
+					 ALU_Result = A + B ; 
+				 2'b01: // Subtraction
+					 ALU_Result = A - B ;
+				 2'b10: // and
+					 ALU_Result = A & B;
+				 2'b11: // or
+				 ALU_Result = A | B;
 
-    // Logic Analyzer
+			 default: ALU_Result = A + B ; 
+		 endcase
+	 end
 
-    .la_data_in(la_data_in),
-    .la_data_out(la_data_out),
-    .la_oenb (la_oenb),
+	 endmodule
 
-    // IO Pads
-
-    .io_in (io_in),
-    .io_out(io_out),
-    .io_oeb(io_oeb),
-
-    // IRQ
-    .irq(user_irq)
-);
-
-endmodule	// user_project_wrapper
-
-`default_nettype wire
+ `default_nettype wire
