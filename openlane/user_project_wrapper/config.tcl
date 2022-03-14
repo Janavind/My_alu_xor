@@ -59,7 +59,7 @@ set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
         $::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-                $script_dir/../../verilog/rtl/my_alu_xor.v"
+                $script_dir/../../verilog/rtl/user_proj_example.v"
 
 
 set ::env(EXTRA_LEFS) $script_dir/macros/user_proj_example.lef
