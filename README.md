@@ -5,5 +5,7 @@ It's a digital alu_xor having two copies of ALUs, namely: alu1 and alu2. The out
 
 
 **References**
+
 Refer to [README](docs/source/quickstart.rst) for a quick start of how to use caravel_user_project
+
 Refer to [README](docs/source/index.rst) for this sample project documentation. 
