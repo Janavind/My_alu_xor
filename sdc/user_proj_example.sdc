@@ -1,6 +1,6 @@
 ###############################################################################
 # Created by write_sdc
-# Tue Mar 15 21:16:00 2022
+# Tue Mar 15 22:53:50 2022
 ###############################################################################
 current_design user_proj_example
 ###############################################################################
@@ -511,9 +511,6 @@ set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {io
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {io_out[7]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {io_out[8]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {io_out[9]}]
-set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {irq[0]}]
-set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {irq[1]}]
-set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {irq[2]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {la_data_out[0]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {la_data_out[100]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {la_data_out[101]}]
@@ -642,6 +639,9 @@ set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {la
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {la_data_out[98]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {la_data_out[99]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {la_data_out[9]}]
+set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {user_irq[0]}]
+set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {user_irq[1]}]
+set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {user_irq[2]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {wbs_ack_o}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {wbs_dat_o[0]}]
 set_output_delay 2.0000 -clock [get_clocks {wb_clk_i}] -add_delay [get_ports {wbs_dat_o[10]}]
@@ -784,9 +784,6 @@ set_load -pin_load 0.0334 [get_ports {io_out[3]}]
 set_load -pin_load 0.0334 [get_ports {io_out[2]}]
 set_load -pin_load 0.0334 [get_ports {io_out[1]}]
 set_load -pin_load 0.0334 [get_ports {io_out[0]}]
-set_load -pin_load 0.0334 [get_ports {irq[2]}]
-set_load -pin_load 0.0334 [get_ports {irq[1]}]
-set_load -pin_load 0.0334 [get_ports {irq[0]}]
 set_load -pin_load 0.0334 [get_ports {la_data_out[127]}]
 set_load -pin_load 0.0334 [get_ports {la_data_out[126]}]
 set_load -pin_load 0.0334 [get_ports {la_data_out[125]}]
@@ -915,6 +912,9 @@ set_load -pin_load 0.0334 [get_ports {la_data_out[3]}]
 set_load -pin_load 0.0334 [get_ports {la_data_out[2]}]
 set_load -pin_load 0.0334 [get_ports {la_data_out[1]}]
 set_load -pin_load 0.0334 [get_ports {la_data_out[0]}]
+set_load -pin_load 0.0334 [get_ports {user_irq[2]}]
+set_load -pin_load 0.0334 [get_ports {user_irq[1]}]
+set_load -pin_load 0.0334 [get_ports {user_irq[0]}]
 set_load -pin_load 0.0334 [get_ports {wbs_dat_o[31]}]
 set_load -pin_load 0.0334 [get_ports {wbs_dat_o[30]}]
 set_load -pin_load 0.0334 [get_ports {wbs_dat_o[29]}]

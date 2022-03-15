@@ -17,10 +17,10 @@ module user_project_wrapper (user_clock2,
     io_in,
     io_oeb,
     io_out,
-    irq,
     la_data_in,
     la_data_out,
     la_oenb,
+    user_irq,
     wbs_adr_i,
     wbs_dat_i,
     wbs_dat_o,
@@ -44,10 +44,10 @@ module user_project_wrapper (user_clock2,
  input [37:0] io_in;
  output [37:0] io_oeb;
  output [37:0] io_out;
- output [2:0] irq;
  input [127:0] la_data_in;
  output [127:0] la_data_out;
  input [127:0] la_oenb;
+ output [2:0] user_irq;
  input [31:0] wbs_adr_i;
  input [31:0] wbs_dat_i;
  output [31:0] wbs_dat_o;
@@ -205,9 +205,6 @@ module user_project_wrapper (user_clock2,
     io_out[2],
     io_out[1],
     io_out[0]}),
-    .irq({irq[2],
-    irq[1],
-    irq[0]}),
     .la_data_in({la_data_in[127],
     la_data_in[126],
     la_data_in[125],
@@ -592,6 +589,9 @@ module user_project_wrapper (user_clock2,
     la_oenb[2],
     la_oenb[1],
     la_oenb[0]}),
+    .user_irq({user_irq[2],
+    user_irq[1],
+    user_irq[0]}),
     .wbs_adr_i({wbs_adr_i[31],
     wbs_adr_i[30],
     wbs_adr_i[29],

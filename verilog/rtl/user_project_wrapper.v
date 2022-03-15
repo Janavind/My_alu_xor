@@ -69,7 +69,7 @@ output [`MPRJ_IO_PADS-1:0] io_oeb,
  input   user_clock2,
 
 // User maskable interrupt signals
- output [2:0] irq
+ output [2:0] user_irq
  );
 
  /*--------------------------------------*/
@@ -103,7 +103,7 @@ output [`MPRJ_IO_PADS-1:0] io_oeb,
 	 .io_in(io_in),
 	 .io_out(io_out),
 	 .io_oeb(io_oeb),
-	 .irq(irq),
+	 .user_irq(user_irq),
 	 .user_clock2(user_clock2),
 	 .analog_io(analog_io)
  );

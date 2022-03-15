@@ -52,7 +52,7 @@ module user_proj_example  (
 		 input   user_clock2,
 		
 		// // User maskable interrupt signals
-		output [2:0] irq
+		output [2:0] user_irq
 		 );
 		//
 		// /*--------------------------------------*/
@@ -67,7 +67,7 @@ module user_proj_example  (
         wire [37:0] dum2;
 	assign dum2 = analog_io [37:0];
 	wire clk1= user_clock2;
-        assign irq = 3'b 000;
+        assign user_irq = 3'b 000;
 	wire dum3= wb_rst_i;
         wire dum4= wbs_stb_i;
 	wire dum5= wbs_cyc_i;
