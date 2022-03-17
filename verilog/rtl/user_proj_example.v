@@ -58,11 +58,6 @@ module user_proj_example  (
 		// /*--------------------------------------*/
 		// /* User project is instantiated  here   */
 		// /*--------------------------------------*/
-	//wire [127:0] la_in,la_out,la_enb;
-	//wire [127:0] dum1;
-	//assign dum1 = la_data_in [127:0];
-        //assign la_data_out[127:0]=0;
-	//assign la_oenb [127:0]=0;
 	assign io_oeb[37:0]=0;
         wire [37:0] dum2;
 	assign dum2 = analog_io [37:0];
@@ -83,16 +78,11 @@ module user_proj_example  (
         assign la2_data_in = la_data_in[127:0];
         assign la2_data_out = la_data_out[127:0];
         assign la2_oenb = la_oenb[127:0];
- wire clk;
-// wire [`MPRJ_IO_PADS-1:0] io_in;
-// wire [`MPRJ_IO_PADS-1:0] io_out;
- wire [7:0] A0,B0,A1,B1;  // ALU 8-bit Inputs                 
- wire [1:0] ALU_Sel1,ALU_Sel2;// ALU Selection
  wire [7:0] ALU_Out1,ALU_Out2; // ALU 8-bit Output
  wire CarryOut1,CarryOut2; // Carry Out Flag
  wire [7:0] x;
  wire y;
- wire clk  = wb_i_clk;
+ wire clk  = wb_clk_i;
  wire[7:0] A0 = io_in[7:0];
  wire[7:0] B0 = io_in[15:8];
  wire[7:0] A1 = io_in[23:16];
