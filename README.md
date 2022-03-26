@@ -5,7 +5,7 @@ It's a digital alu_xor having two copies of ALUs, namely: alu1 and alu2. The out
 
 **BLOCK DIAGRAM**
 
-<img width="415" alt="image" src="https://user-images.githubusercontent.com/88816771/160224576-f9d17b28-e6e5-418b-9b3b-bd1a4c6acca9.png">
+<img width="515" alt="image" src="https://user-images.githubusercontent.com/88816771/160224576-f9d17b28-e6e5-418b-9b3b-bd1a4c6acca9.png">
 
 
 
